@@ -622,7 +622,12 @@ export class DownloaderHelper extends EventEmitter {
             fileName = fileName.replace(new RegExp('"', 'g'), '');
             fileName = fileName.replace(/[/\\]/g, '');
         } else {
+            const ct = headers['content-type'];            
+            const ext = ct.split('/');
             fileName = path.basename(URL.parse(this.requestURL).pathname);
+            if (!fileName.includes('.')) {
+                fileName = `${fileName}.${ext[1]}`;
+            }
         }
 
         return (this.__opts.fileName)
