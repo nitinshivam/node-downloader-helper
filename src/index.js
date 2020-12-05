@@ -4,6 +4,7 @@ import * as path from 'path';
 import * as http from 'http';
 import * as https from 'https';
 import * as URL from 'url';
+const mime = require('mime');
 
 export const DH_STATES = {
     IDLE: 'IDLE',
@@ -622,11 +623,11 @@ export class DownloaderHelper extends EventEmitter {
             fileName = fileName.replace(new RegExp('"', 'g'), '');
             fileName = fileName.replace(/[/\\]/g, '');
         } else {
-            const ct = headers['content-type'];            
-            const ext = ct.split('/');
+            const ct = headers['content-type'];  
+            const ext = mime.getExtension(ct);
             fileName = path.basename(URL.parse(this.requestURL).pathname);
             if (!fileName.includes('.')) {
-                fileName = `${fileName}.${ext[1]}`;
+                fileName = `${fileName}.${ext}`;
             }
         }
 
