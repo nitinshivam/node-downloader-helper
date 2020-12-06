@@ -612,7 +612,6 @@ export class DownloaderHelper extends EventEmitter {
      */
     __getFileNameFromHeaders(headers) {
         let fileName = '';
-        console.log(headers);
 
         // Get Filename
         if (headers.hasOwnProperty('content-disposition') &&
